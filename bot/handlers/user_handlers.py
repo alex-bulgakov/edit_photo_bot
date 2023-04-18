@@ -22,6 +22,7 @@ async def cmd_start(msg: types.Message) -> None:
     await msg.answer(
         text=reply_text
     )
+    await msg.delete()
 
 
 async def handler_rmbcg(msg: types.Message) -> None:
