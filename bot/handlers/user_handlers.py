@@ -18,7 +18,7 @@ async def cmd_start(msg: types.Message) -> None:
     :return:
     """
 
-    reply_text = 'Send photo: '
+    reply_text = 'Отправьте фотографию: '
     await msg.answer(
         text=reply_text
     )
@@ -31,14 +31,19 @@ async def handler_rmbcg(msg: types.Message) -> None:
     :param msg:
     :return:
     """
-    img = load_photo(msg.photo[3].file_id)
+    # img = remove_background(img) # TODO move to callback
+    # if not os.path.exists('result'):
+    #     os.mkdir('result')
+    # img.save(f'result/{file_name}.png', format='PNG')
+    # await msg.answer_photo(photo=open(f'result/{file_name}.png', 'rb'))
+    await msg.answer('Выберете что нужно сделать с фотографией', reply_markup=get_editphoto_keyboard())
+
+
+async def callback_rmbcg(clb: types.CallbackQuery):
+    img = load_photo(clb.message.photo[3].file_id)
     img = Image.open(io.BytesIO(img))
-    img = remove_background(img)
     file_name = secrets.token_hex(8)
-    if not os.path.exists('result'):
-        os.mkdir('result')
-    img.save(f'result/{file_name}.png', format='PNG')
-    await msg.answer_photo(photo=open(f'result/{file_name}.png', 'rb'))
+    await clb.answer('Фото сохранено')
 
 
 def register_user_handlers(dp: Dispatcher) -> None:
@@ -50,3 +55,4 @@ def register_user_handlers(dp: Dispatcher) -> None:
 
     dp.register_message_handler(cmd_start, commands=['start'])
     dp.register_message_handler(handler_rmbcg, content_types=types.ContentTypes.PHOTO)
+    dp.register_callback_query_handler(callback_rmbcg, lambda callback: callback.data == 'rmbcg_btn')
