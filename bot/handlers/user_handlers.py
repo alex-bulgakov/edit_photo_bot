@@ -40,7 +40,6 @@ async def handler_rmbcg(msg: types.Message) -> None:
     await msg.answer_photo(photo=open(f'result/{file_name}.png', 'rb'))
 
 
-
 def register_user_handlers(dp: Dispatcher) -> None:
     """
     register handlers
