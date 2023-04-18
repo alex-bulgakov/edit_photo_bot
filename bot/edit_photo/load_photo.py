@@ -4,6 +4,7 @@ import requests
 from dotenv import load_dotenv
 
 
+# TODO возможно лишний модуль
 def load_photo(file_id):
     load_dotenv()
     token = os.getenv('TOKEN')

@@ -32,9 +32,6 @@ async def handler_rmbcg(msg: types.Message) -> None:
     :param msg:
     :return:
     """
-    # img = load_photo(msg.photo[-1].file_id)
-    # img = Image.open(io.BytesIO(img), format())
-    # # img = remove_background(img) # TODO move to callback
     file_name = secrets.token_hex(8)
     path = 'result'
     if not os.path.exists(path):
@@ -62,7 +59,6 @@ async def callback_rmbcg(clb: types.CallbackQuery):
         await clb.answer()
         # await clb.answer('Фото сохранено')
     os.remove(file_path)
-
 
 
 def register_user_handlers(dp: Dispatcher) -> None:
