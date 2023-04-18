@@ -23,6 +23,7 @@ async def main() -> None:
     register_handler(dp)
 
     try:
+        await dp.skip_updates()  # TODO remove when deploy
         await dp.start_polling()
     except Exception as _ex:
         logging.error(_ex)
